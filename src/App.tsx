@@ -95,6 +95,15 @@ function App() {
         }
     };
 
+    const handleUpdateUser = (updatedUser:User) => {
+        setUsers((prevUsers) => {
+            const updatedUsers = prevUsers.map((user) =>
+                user.email === updatedUser.email ? { ...updatedUser } : user
+            );
+            return [...updatedUsers]; // nueva referencia para forzar render
+        });
+    }
+
     return (
         <div className="App" ref={divRef}>
             {/* Notification Popup */}
@@ -116,7 +125,7 @@ function App() {
                 ) : (
                     <>
                         <h2>Bienvenido, {currentUser?.name}!</h2>
-                        <UsersList users={users} />
+                        <UsersList users={users} onUpdateUser={handleUpdateUser} />
                         <p>New users: {newUsersNumber}</p>
                         <Form onNewUser={handleNewUser} />
                     </>
